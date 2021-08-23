@@ -3,7 +3,6 @@
 *.class
 *.war
 *.ear
-*.jar
 hs_err_pid*
 
 ## Robovm
@@ -102,6 +101,7 @@ gradle-app.setting
 /desktop/build/
 /html/build/
 /ios/build/
+/lib/
 
 ## OS Specific
 .DS_Store
