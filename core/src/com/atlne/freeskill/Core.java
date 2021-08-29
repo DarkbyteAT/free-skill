@@ -1,6 +1,7 @@
 package com.atlne.freeskill;
 
 import com.atlne.freeskill.audio.AudioPlayer;
+import com.atlne.freeskill.graphics.GraphicsManager;
 import com.atlne.freeskill.graphics.fonts.FontManager;
 import com.atlne.freeskill.utils.Creatable;
 import com.atlne.freeskill.utils.json.JsonHelper;
@@ -21,6 +22,7 @@ public final class Core extends ApplicationAdapter {
 	@Getter private transient JsonHelper jsonHelper;
 	@Getter private transient AudioPlayer audioPlayer;
 	@Getter private transient FontManager fontManager;
+	@Getter private transient GraphicsManager graphicsManager;
 
 	@Override
 	public void create() {
@@ -36,15 +38,15 @@ public final class Core extends ApplicationAdapter {
 	}
 
 	@Override
-	public void render() {
-
-	}
-	
-	@Override
 	public void dispose() {
 		Gdx.app.log("Cleanup", "Running asset disposal methods...");
 		disposables.forEach(Disposable::dispose);
 		Gdx.app.log("Cleanup", "Asset disposal methods complete!");
+	}
+
+	@Override
+	public void render() {
+		graphicsManager.update();
 	}
 
 	public void registerCreatable(Creatable creatable) {
