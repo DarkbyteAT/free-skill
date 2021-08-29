@@ -1,16 +1,16 @@
 package com.atlne.freeskill.audio;
 
 import com.atlne.freeskill.Core;
+import com.atlne.freeskill.utils.AssetHandler;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.utils.Disposable;
 import lombok.Getter;
 
 import java.util.HashMap;
 
-public class AudioPlayer implements Disposable {
+public class AudioPlayer extends AssetHandler {
 
     public static final String TAG = "AudioPlayer";
     public static final String[] SUPPORTED_EXTENSIONS = {"mp3", "wav", "ogg"};
@@ -25,12 +25,12 @@ public class AudioPlayer implements Disposable {
     @Getter private transient float fadeMultiplier = 1;
     @Getter private transient String currentTrack = "";
 
-    private transient Core core;
-
     public AudioPlayer(Core core) {
-        this.core = core;
-        core.registerDisposable(this);
+        super(core);
+    }
 
+    @Override
+    public void create() {
         Gdx.app.log(TAG, "Loading volume information JSON...");
         FileHandle localVolumeFile = Gdx.files.local(VOLUME_FILE_LOCATION);
 

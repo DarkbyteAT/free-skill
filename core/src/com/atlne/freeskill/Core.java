@@ -1,6 +1,8 @@
 package com.atlne.freeskill;
 
 import com.atlne.freeskill.audio.AudioPlayer;
+import com.atlne.freeskill.graphics.fonts.FontManager;
+import com.atlne.freeskill.utils.Creatable;
 import com.atlne.freeskill.utils.json.JsonHelper;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
@@ -8,27 +10,34 @@ import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.ScreenUtils;
 import lombok.Getter;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 
 public final class Core extends ApplicationAdapter {
 
-	private transient List<Disposable> disposables = Collections.emptyList();
+	private final transient List<Creatable> creatables = new ArrayList<>();
+	private final transient List<Disposable> disposables = new ArrayList<>();
 
 	@Getter private transient JsonHelper jsonHelper;
 	@Getter private transient AudioPlayer audioPlayer;
+	@Getter private transient FontManager fontManager;
 
 	@Override
 	public void create() {
 		Gdx.app.log("Startup", "Initialising core objects...");
 		jsonHelper = new JsonHelper();
 		audioPlayer = new AudioPlayer(this);
+		fontManager = new FontManager(this);
 		Gdx.app.log("Startup", "Core objects initialised!");
+
+		Gdx.app.log("Startup", "Running asset creation methods...");
+		creatables.forEach(Creatable::create);
+		Gdx.app.log("Startup", "Asset creation methods complete!");
 	}
 
 	@Override
 	public void render() {
-		ScreenUtils.clear(0, 0, 0, 1);
+
 	}
 	
 	@Override
@@ -36,6 +45,10 @@ public final class Core extends ApplicationAdapter {
 		Gdx.app.log("Cleanup", "Running asset disposal methods...");
 		disposables.forEach(Disposable::dispose);
 		Gdx.app.log("Cleanup", "Asset disposal methods complete!");
+	}
+
+	public void registerCreatable(Creatable creatable) {
+		creatables.add(creatable);
 	}
 
 	public void registerDisposable(Disposable disposable) {
