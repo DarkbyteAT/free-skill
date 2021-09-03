@@ -1,15 +1,14 @@
 package com.atlne.freeskill.graphics.fonts;
 
 import com.atlne.freeskill.Core;
-import com.atlne.freeskill.utils.AssetHandler;
+import com.atlne.freeskill.utils.Manager;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class FontManager extends AssetHandler {
+public class FontManager extends Manager {
 
     public static final String FONTS_FOLDER_PATH = "/assets/fonts";
     public static final String TAG = "FontManager";
@@ -22,8 +21,9 @@ public class FontManager extends AssetHandler {
 
     @Override
     public void create() {
-        for(FileHandle file : Gdx.files.local(FONTS_FOLDER_PATH).list("ttf")) {
-            String fontName = file.nameWithoutExtension();
+        for(var file : Gdx.files.local(FONTS_FOLDER_PATH).list("ttf")) {
+            var fontName = file.nameWithoutExtension();
+            Gdx.app.log(TAG, String.format("Found font '%s'!", fontName));
             fontLoaders.put(fontName, new FontLoader(core, fontName));
         }
     }

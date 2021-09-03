@@ -1,7 +1,7 @@
 package com.atlne.freeskill.audio;
 
 import com.atlne.freeskill.Core;
-import com.atlne.freeskill.utils.AssetHandler;
+import com.atlne.freeskill.utils.Manager;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
@@ -10,7 +10,7 @@ import lombok.Getter;
 
 import java.util.HashMap;
 
-public class AudioPlayer extends AssetHandler {
+public class AudioPlayer extends Manager {
 
     public static final String TAG = "AudioPlayer";
     public static final String[] SUPPORTED_EXTENSIONS = {"mp3", "wav", "ogg"};
@@ -68,8 +68,8 @@ public class AudioPlayer extends AssetHandler {
 
     private void loadMusicIfNotLoaded(String musicName) {
         if(!music.containsKey(musicName)) {
-            for(String extension : SUPPORTED_EXTENSIONS) {
-                FileHandle file = Gdx.files.local(String.format("%s/%s.%s", MUSIC_FOLDER_PATH, musicName, extension));
+            for(var extension : SUPPORTED_EXTENSIONS) {
+                var file = Gdx.files.local(String.format("%s/%s.%s", MUSIC_FOLDER_PATH, musicName, extension));
 
                 if(file.exists()) {
                     music.put(musicName, Gdx.audio.newMusic(file)).setLooping(true);
@@ -82,8 +82,8 @@ public class AudioPlayer extends AssetHandler {
 
     private void loadSoundEffectIfNotLoaded(String soundEffectName) {
         if(!soundEffects.containsKey(soundEffectName)) {
-            for(String extension : SUPPORTED_EXTENSIONS) {
-                FileHandle file = Gdx.files.local(String.format("%s/%s.%s", SOUND_EFFECTS_FOLDER_PATH, soundEffectName, extension));
+            for(var extension : SUPPORTED_EXTENSIONS) {
+                var file = Gdx.files.local(String.format("%s/%s.%s", SOUND_EFFECTS_FOLDER_PATH, soundEffectName, extension));
 
                 if(file.exists()) {
                     soundEffects.put(soundEffectName, Gdx.audio.newSound(file));

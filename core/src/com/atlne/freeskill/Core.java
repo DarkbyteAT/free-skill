@@ -8,7 +8,6 @@ import com.atlne.freeskill.utils.json.JsonHelper;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Disposable;
-import com.badlogic.gdx.utils.ScreenUtils;
 import lombok.Getter;
 
 import java.util.ArrayList;
@@ -30,6 +29,7 @@ public final class Core extends ApplicationAdapter {
 		jsonHelper = new JsonHelper();
 		audioPlayer = new AudioPlayer(this);
 		fontManager = new FontManager(this);
+		graphicsManager = new GraphicsManager(this);
 		Gdx.app.log("Startup", "Core objects initialised!");
 
 		Gdx.app.log("Startup", "Running asset creation methods...");

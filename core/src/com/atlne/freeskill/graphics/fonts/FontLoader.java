@@ -1,7 +1,7 @@
 package com.atlne.freeskill.graphics.fonts;
 
 import com.atlne.freeskill.Core;
-import com.atlne.freeskill.utils.AssetHandler;
+import com.atlne.freeskill.utils.Manager;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
@@ -11,7 +11,7 @@ import lombok.Getter;
 
 import java.util.HashMap;
 
-public class FontLoader extends AssetHandler {
+public class FontLoader extends Manager {
 
     static {
         FreeTypeFontGenerator.setMaxTextureSize(FreeTypeFontGenerator.NO_MAXIMUM);
@@ -34,7 +34,7 @@ public class FontLoader extends AssetHandler {
         fontGenerator = new FreeTypeFontGenerator(Gdx.files.local(String.format("%s/%s.ttf",
                 FontManager.FONTS_FOLDER_PATH, fontName)));
 
-        for(FontSize fontSize : FontSize.values()) {
+        for(var fontSize : FontSize.values()) {
             generatedFonts.put(fontSize, fontGenerator.generateFont(generateParameters(fontSize)));
             Gdx.app.log(TAG, String.format("Loaded font '%s' size %s!", fontName, fontSize));
         }
