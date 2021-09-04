@@ -2,6 +2,7 @@ package com.atlne.freeskill.graphics;
 
 import com.atlne.freeskill.Core;
 import com.atlne.freeskill.graphics.scenes.SceneManager;
+import com.atlne.freeskill.graphics.scenes.loading.LoadingScene;
 import com.atlne.freeskill.utils.Manager;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -35,6 +36,7 @@ public class GraphicsManager extends Manager {
         VisUI.getSkin().getFont("small-font").getData().markupEnabled = true;
 
         sceneManager = new SceneManager();
+        sceneManager.pushScene(new LoadingScene(core));
     }
 
     @Override

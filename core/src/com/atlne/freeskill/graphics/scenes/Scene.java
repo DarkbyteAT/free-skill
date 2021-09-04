@@ -1,5 +1,6 @@
 package com.atlne.freeskill.graphics.scenes;
 
+import com.atlne.freeskill.Core;
 import com.atlne.freeskill.utils.Creatable;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -11,6 +12,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public class Scene extends Stage implements Creatable {
 
+    protected transient Core core;
     @Getter private transient boolean displayPrevious = true;
 
     @Override

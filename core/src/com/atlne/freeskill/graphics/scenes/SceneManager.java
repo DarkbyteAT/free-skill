@@ -14,7 +14,9 @@ public class SceneManager {
     private transient ArrayDeque<Scene> popQueue = new ArrayDeque<>();
 
     public void update() {
+        pushQueue.forEach(Scene::create);
         sceneStack.addAll(pushQueue);
+        popQueue.forEach(Scene::dispose);
         sceneStack.removeAll(popQueue);
         displayScenes();
     }

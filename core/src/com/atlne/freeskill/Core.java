@@ -25,16 +25,9 @@ public final class Core extends ApplicationAdapter {
 
 	@Override
 	public void create() {
-		Gdx.app.log("Startup", "Initialising core objects...");
-		jsonHelper = new JsonHelper();
-		audioPlayer = new AudioPlayer(this);
-		fontManager = new FontManager(this);
-		graphicsManager = new GraphicsManager(this);
-		Gdx.app.log("Startup", "Core objects initialised!");
-
-		Gdx.app.log("Startup", "Running asset creation methods...");
-		creatables.forEach(Creatable::create);
-		Gdx.app.log("Startup", "Asset creation methods complete!");
+		loadCoreObjects();
+		runCreatables();
+		preloadNonCoreObjects();
 	}
 
 	@Override
@@ -55,5 +48,24 @@ public final class Core extends ApplicationAdapter {
 
 	public void registerDisposable(Disposable disposable) {
 		disposables.add(disposable);
+	}
+
+	public void runCreatables() {
+		creatables.forEach(Creatable::create);
+		creatables.clear();
+	}
+
+	private void loadCoreObjects() {
+		Gdx.app.log("Startup", "Initialising core objects...");
+		jsonHelper = new JsonHelper();
+		audioPlayer = new AudioPlayer(this);
+		graphicsManager = new GraphicsManager(this);
+		Gdx.app.log("Startup", "Core objects initialised!");
+	}
+
+	private void preloadNonCoreObjects() {
+		Gdx.app.log("Startup", "Initialising objects for further loading...");
+		fontManager = new FontManager(this);
+		Gdx.app.log("Startup", "Further objects initialised!");
 	}
 }

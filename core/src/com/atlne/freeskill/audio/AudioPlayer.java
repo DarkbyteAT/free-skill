@@ -14,9 +14,9 @@ public class AudioPlayer extends Manager {
 
     public static final String TAG = "AudioPlayer";
     public static final String[] SUPPORTED_EXTENSIONS = {"mp3", "wav", "ogg"};
-    public static final String MUSIC_FOLDER_PATH = "/assets/music";
-    public static final String SOUND_EFFECTS_FOLDER_PATH = "/assets/sfx";
-    public static final String VOLUME_FILE_LOCATION = "/config/volume.json";
+    public static final String MUSIC_FOLDER_PATH = "assets/music";
+    public static final String SOUND_EFFECTS_FOLDER_PATH = "assets/sfx";
+    public static final String VOLUME_FILE_LOCATION = "config/volume.json";
 
     private final transient HashMap<String, Music> music = new HashMap<>();
     private final transient HashMap<String, Sound> soundEffects = new HashMap<>();
@@ -73,10 +73,12 @@ public class AudioPlayer extends Manager {
 
                 if(file.exists()) {
                     music.put(musicName, Gdx.audio.newMusic(file)).setLooping(true);
-                } else {
-                    throw new RuntimeException(String.format("Music '%s' does not exist!", musicName));
                 }
             }
+        }
+
+        if(!music.containsKey(musicName)) {
+            throw new RuntimeException(String.format("Music '%s' does not exist!", musicName));
         }
     }
 
@@ -87,10 +89,12 @@ public class AudioPlayer extends Manager {
 
                 if(file.exists()) {
                     soundEffects.put(soundEffectName, Gdx.audio.newSound(file));
-                } else {
-                    throw new RuntimeException(String.format("Sound effect '%s' does not exist!", soundEffectName));
                 }
             }
+        }
+
+        if(!soundEffects.containsKey(soundEffectName)) {
+            throw new RuntimeException(String.format("Sound effect '%s' does not exist!", soundEffectName));
         }
     }
 
