@@ -1,7 +1,7 @@
 package com.atlne.freeskill.desktop;
 
 import com.atlne.freeskill.Core;
-import com.atlne.freeskill.graphics.scenes.SceneManager;
+import com.atlne.freeskill.graphics.scenes.SceneController;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
@@ -15,6 +15,6 @@ public final class DesktopLauncher {
 		config.backgroundFPS = 0;
 		config.foregroundFPS = 0;
 		new LwjglApplication(new Core(), config);
-		SceneManager sceneManager = new SceneManager();
+		SceneController sceneManager = new SceneController();
 	}
 }

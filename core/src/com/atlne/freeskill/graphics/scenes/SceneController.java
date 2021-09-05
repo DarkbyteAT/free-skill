@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
-public class SceneManager implements Disposable {
+public class SceneController implements Disposable {
 
     public static final String TAG = "SceneManager";
 

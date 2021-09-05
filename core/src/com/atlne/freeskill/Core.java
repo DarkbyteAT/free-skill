@@ -3,6 +3,7 @@ package com.atlne.freeskill;
 import com.atlne.freeskill.audio.AudioPlayer;
 import com.atlne.freeskill.graphics.GraphicsManager;
 import com.atlne.freeskill.graphics.fonts.FontManager;
+import com.atlne.freeskill.graphics.shaders.ShaderLibrary;
 import com.atlne.freeskill.input.InputManager;
 import com.atlne.freeskill.utils.Creatable;
 import com.atlne.freeskill.utils.json.JsonHelper;
@@ -25,10 +26,10 @@ public final class Core extends ApplicationAdapter {
 	@Getter private transient InputManager inputManager;
 
 	@Getter private transient FontManager fontManager;
+	@Getter private transient ShaderLibrary shaderLibrary;
 
 	@Override
 	public void create() {
-
 		loadCoreObjects();
 		runCreatables();
 		preloadNonCoreObjects();
@@ -77,6 +78,7 @@ public final class Core extends ApplicationAdapter {
 	private void preloadNonCoreObjects() {
 		Gdx.app.log("Startup", "Initialising objects for further loading...");
 		fontManager = new FontManager(this);
+		shaderLibrary = new ShaderLibrary(this);
 		Gdx.app.log("Startup", "Further objects initialised!");
 	}
 }

@@ -1,7 +1,7 @@
 package com.atlne.freeskill.graphics;
 
 import com.atlne.freeskill.Core;
-import com.atlne.freeskill.graphics.scenes.SceneManager;
+import com.atlne.freeskill.graphics.scenes.SceneController;
 import com.atlne.freeskill.graphics.scenes.loading.LoadingScene;
 import com.atlne.freeskill.utils.Manager;
 import com.badlogic.gdx.Gdx;
@@ -22,7 +22,7 @@ public class GraphicsManager extends Manager {
     public static final Color SCREEN_CLEAR_COLOUR = Color.BLACK;
     public static final int PIXELS_PER_METER = 32;
 
-    @Getter private transient SceneManager sceneManager;
+    @Getter private transient SceneController sceneController;
 
     public GraphicsManager(Core core) {
         super(core);
@@ -35,23 +35,23 @@ public class GraphicsManager extends Manager {
         VisUI.getSkin().getFont("default-font").getData().markupEnabled = true;
         VisUI.getSkin().getFont("small-font").getData().markupEnabled = true;
 
-        sceneManager = new SceneManager();
-        sceneManager.pushScene(new LoadingScene(core));
+        sceneController = new SceneController();
+        sceneController.pushScene(new LoadingScene(core));
     }
 
     @Override
     public void dispose() {
         VisUI.dispose(true);
-        sceneManager.dispose();
+        sceneController.dispose();
     }
 
     public void update() {
         ScreenUtils.clear(SCREEN_CLEAR_COLOUR);
-        sceneManager.update();
+        sceneController.update();
     }
 
     public void resize(int width, int height) {
-        sceneManager.resize(width, height);
+        sceneController.resize(width, height);
     }
 
     public void takeScreenshot() {

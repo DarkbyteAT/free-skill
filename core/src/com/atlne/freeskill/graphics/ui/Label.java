@@ -24,7 +24,7 @@ public class Label extends VisLabel {
     }
 
     private void updateBounds() {
-        GlyphLayout layout = new GlyphLayout();
+        var layout = new GlyphLayout();
         layout.setText(getStyle().font, getText());
         setWidth(layout.width);
         setHeight(layout.height);

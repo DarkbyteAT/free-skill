@@ -51,8 +51,8 @@ public class LoadingScene extends Scene {
             core.getAudioPlayer().playSoundEffect(SPLASH_SOUND_EFFECT_NAME);
             loaded = true;
         } else if(loaded && splashColour.r < SPLASH_ALPHA_THRESHOLD) {
-            core.getGraphicsManager().getSceneManager().popScene(this);
-            core.getGraphicsManager().getSceneManager().pushScene(new MenuScene(core));
+            core.getGraphicsManager().getSceneController().popScene(this);
+            core.getGraphicsManager().getSceneController().pushScene(new MenuScene(core));
         }
 
         super.act();
