@@ -1,11 +1,10 @@
 #version 120
 
-attribute vec2 a_texCoord0;
-attribute vec3 a_position;
-attribute vec4 a_color;
+uniform sampler2D u_sampler2D;
 
-uniform mat4 u_projTrans;
+varying vec2 v_texCoord0;
+varying vec4 v_color;
 
 void main() {
-    gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);
+    gl_FragColor = texture2D(u_sampler2D, v_texCoord0) * v_color;
 }

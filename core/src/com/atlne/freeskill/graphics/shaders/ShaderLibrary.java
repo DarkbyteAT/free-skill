@@ -44,6 +44,11 @@ public class ShaderLibrary extends Manager {
 
         if(vertexShader.exists() && fragmentShader.exists()) {
             shaderMap.put(shaderName, new ShaderProgram(vertexShader, fragmentShader));
+            if(!shaderMap.get(shaderName).isCompiled()) {
+                new RuntimeException(String.format("Shader '%s' did not compile correctly! See below for log:\n%s",
+                        shaderName,
+                        shaderMap.get(shaderName).getLog()));
+            }
         } else {
             throw new RuntimeException(String.format("Vertex or fragment shader missing for '%s'!", shaderName));
         }
