@@ -7,13 +7,13 @@ import java.lang.reflect.Type;
 
 public class JsonHelper {
 
-    private transient Gson gson = new GsonBuilder()
+    private Gson gson = new GsonBuilder()
             .serializeNulls()
             .setPrettyPrinting()
             .enableComplexMapKeySerialization()
             .create();
 
-    public String serialise(Object object, Class<?> type) {
+    public String serialise(Object object, Type type) {
         return gson.toJson(object, type);
     }
 

@@ -1,17 +1,31 @@
 package com.atlne.freeskill.graphics.scenes;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.utils.Disposable;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
-public class SceneManager {
+public class SceneManager implements Disposable {
+
+    public static final String TAG = "SceneManager";
 
     private transient Stack<Scene> sceneStack = new Stack<>();
     private transient ArrayDeque<Scene> pushQueue = new ArrayDeque<>();
     private transient ArrayDeque<Scene> popQueue = new ArrayDeque<>();
+
+    @Override
+    public void dispose() {
+        Gdx.app.log(TAG, "Disposing all scenes...");
+        sceneStack.forEach(Scene::dispose);
+        sceneStack.clear();
+        pushQueue.forEach(Scene::dispose);
+        pushQueue.clear();
+        popQueue.forEach(Scene::dispose);
+        popQueue.clear();
+    }
 
     public void update() {
         pushQueue.forEach(Scene::create);

@@ -42,6 +42,7 @@ public class GraphicsManager extends Manager {
     @Override
     public void dispose() {
         VisUI.dispose(true);
+        sceneManager.dispose();
     }
 
     public void update() {

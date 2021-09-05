@@ -17,8 +17,15 @@ public class Scene extends Stage implements Creatable {
 
     @Override
     public void create() {
+        Gdx.app.log(getClass().getSimpleName(), "Initialising scene viewport...");
         setViewport(new ScreenViewport(new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight())));
         getViewport().update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
+    }
+
+    @Override
+    public void dispose() {
+        Gdx.app.log(getClass().getSimpleName(), "Disposing scene assets...");
+        super.dispose();
     }
 
     public void display() {

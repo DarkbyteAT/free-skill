@@ -3,6 +3,7 @@ package com.atlne.freeskill;
 import com.atlne.freeskill.audio.AudioPlayer;
 import com.atlne.freeskill.graphics.GraphicsManager;
 import com.atlne.freeskill.graphics.fonts.FontManager;
+import com.atlne.freeskill.input.InputManager;
 import com.atlne.freeskill.utils.Creatable;
 import com.atlne.freeskill.utils.json.JsonHelper;
 import com.badlogic.gdx.ApplicationAdapter;
@@ -20,11 +21,14 @@ public final class Core extends ApplicationAdapter {
 
 	@Getter private transient JsonHelper jsonHelper;
 	@Getter private transient AudioPlayer audioPlayer;
-	@Getter private transient FontManager fontManager;
 	@Getter private transient GraphicsManager graphicsManager;
+	@Getter private transient InputManager inputManager;
+
+	@Getter private transient FontManager fontManager;
 
 	@Override
 	public void create() {
+
 		loadCoreObjects();
 		runCreatables();
 		preloadNonCoreObjects();
@@ -39,6 +43,7 @@ public final class Core extends ApplicationAdapter {
 
 	@Override
 	public void render() {
+		inputManager.update();
 		graphicsManager.update();
 	}
 
@@ -65,6 +70,7 @@ public final class Core extends ApplicationAdapter {
 		jsonHelper = new JsonHelper();
 		audioPlayer = new AudioPlayer(this);
 		graphicsManager = new GraphicsManager(this);
+		inputManager = new InputManager(this);
 		Gdx.app.log("Startup", "Core objects initialised!");
 	}
 

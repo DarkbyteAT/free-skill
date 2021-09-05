@@ -16,12 +16,12 @@ public class AudioPlayer extends Manager {
     public static final String[] SUPPORTED_EXTENSIONS = {"mp3", "wav", "ogg"};
     public static final String MUSIC_FOLDER_PATH = "assets/music";
     public static final String SOUND_EFFECTS_FOLDER_PATH = "assets/sfx";
-    public static final String VOLUME_FILE_LOCATION = "config/volume.json";
+    public static final String VOLUME_FILE_PATH = "config/volume.json";
 
     private final transient HashMap<String, Music> music = new HashMap<>();
     private final transient HashMap<String, Sound> soundEffects = new HashMap<>();
 
-    @Getter private transient VolumeInformation volumeInformation;
+    @Getter private VolumeInformation volumeInformation;
     @Getter private transient float fadeMultiplier = 1;
     @Getter private transient String currentTrack = "";
 
@@ -32,15 +32,15 @@ public class AudioPlayer extends Manager {
     @Override
     public void create() {
         Gdx.app.log(TAG, "Loading volume information JSON...");
-        FileHandle localVolumeFile = Gdx.files.local(VOLUME_FILE_LOCATION);
+        FileHandle volumeFile = Gdx.files.local(VOLUME_FILE_PATH);
 
-        if(localVolumeFile.exists()) {
+        if(volumeFile.exists()) {
             Gdx.app.log(TAG, "Volume information JSON found!");
-            volumeInformation = core.getJsonHelper().deserialise(localVolumeFile.readString(), VolumeInformation.class);
+            volumeInformation = core.getJsonHelper().deserialise(volumeFile.readString(), VolumeInformation.class);
         } else {
             Gdx.app.log(TAG, "Volume information JSON not found!");
             volumeInformation = new VolumeInformation();
-            localVolumeFile.writeString(core.getJsonHelper().serialise(volumeInformation, VolumeInformation.class), false);
+            volumeFile.writeString(core.getJsonHelper().serialise(volumeInformation, VolumeInformation.class), false);
         }
     }
 
@@ -52,6 +52,9 @@ public class AudioPlayer extends Manager {
         soundEffects.values().forEach(Sound::dispose);
         music.clear();
         soundEffects.clear();
+
+        Gdx.app.log(TAG, "Saving volume information JSON...");
+        Gdx.files.local(VOLUME_FILE_PATH).writeString(core.getJsonHelper().serialise(volumeInformation, VolumeInformation.class), false);
     }
 
     public void playMusic(String musicName) {

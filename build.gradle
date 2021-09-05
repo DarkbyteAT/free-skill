@@ -9,6 +9,10 @@ buildscript {
     }
 }
 
+wrapper {
+    distributionType = Wrapper.DistributionType.ALL
+}
+
 allprojects {
     apply plugin: "eclipse"
     apply plugin: "idea"
@@ -29,6 +33,7 @@ allprojects {
         spockVersion = 'spock-2.0'
         jUnitVersion = '5.7.2'
         guavaVersion = '30.1.1-jre'
+        daggerVersion = '2.38.1'
     }
 
     repositories {
@@ -70,7 +75,9 @@ project(":desktop") {
 }
 
 project(":core") {
+    apply plugin: "java"
     apply plugin: "java-library"
+    apply plugin: "idea"
     apply plugin: "war"
 
     dependencies {
