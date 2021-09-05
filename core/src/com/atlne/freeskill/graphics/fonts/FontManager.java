@@ -10,7 +10,7 @@ import java.util.Map;
 
 public class FontManager extends Manager {
 
-    public static final String FONTS_FOLDER_PATH = "/assets/fonts";
+    public static final String FONTS_FOLDER_PATH = "assets/fonts";
     public static final String TAG = "FontManager";
 
     private transient Map<String, FontLoader> fontLoaders = new HashMap<>();
@@ -24,13 +24,16 @@ public class FontManager extends Manager {
         for(var file : Gdx.files.local(FONTS_FOLDER_PATH).list("ttf")) {
             var fontName = file.nameWithoutExtension();
             Gdx.app.log(TAG, String.format("Found font '%s'!", fontName));
-            fontLoaders.put(fontName, new FontLoader(core, fontName));
+            fontLoaders.put(fontName, new FontLoader(fontName));
+            fontLoaders.get(fontName).create();
         }
     }
 
     @Override
     public void dispose() {
-
+        Gdx.app.log(TAG, "Disposing all loaded fonts...");
+        fontLoaders.values().forEach(FontLoader::dispose);
+        fontLoaders.clear();
     }
 
     public BitmapFont getFont(String name, FontSize fontSize) {

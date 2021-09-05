@@ -12,8 +12,8 @@ public class LoadingScene extends Scene {
 
     public static final String SPLASH_TEXTURE_PATH = "assets/textures/scenes/loading/splash.jpg";
     public static final String SPLASH_SOUND_EFFECT_NAME = "scenes/loading/splash";
-    public static final float SPLASH_ALPHA_THRESHOLD = 0.01f;
-    public static final float SPLASH_DURATION = 1;
+    public static final float SPLASH_ALPHA_THRESHOLD = 0.05f;
+    public static final float SPLASH_DURATION = 0.5f;
 
     private transient Image splash;
     private transient Color splashColour = Color.CLEAR;
@@ -27,8 +27,6 @@ public class LoadingScene extends Scene {
     public void create() {
         super.create();
         splash = new Image(new Texture(Gdx.files.local(SPLASH_TEXTURE_PATH)));
-        splash.setAlign(Align.center);
-        splash.setFillParent(true);
         splash.setColor(splashColour);
         addActor(splash);
     }
@@ -36,9 +34,11 @@ public class LoadingScene extends Scene {
     @Override
     public void draw() {
         splashColour = loaded
-                ? splashColour.lerp(Color.CLEAR, Gdx.graphics.getDeltaTime() / SPLASH_DURATION)
+                ? splashColour.lerp(Color.BLACK, Gdx.graphics.getDeltaTime() / SPLASH_DURATION)
                 : splashColour.lerp(Color.WHITE, Gdx.graphics.getDeltaTime() / SPLASH_DURATION);
+        splash.setPosition(getWidth() / 2, getHeight() / 2, Align.center);
         splash.setColor(splashColour);
+
         super.draw();
     }
 

@@ -1,17 +1,18 @@
 package com.atlne.freeskill.graphics.fonts;
 
-import com.atlne.freeskill.Core;
-import com.atlne.freeskill.utils.Manager;
+import com.atlne.freeskill.utils.Creatable;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.utils.Disposable;
 import lombok.Getter;
 
 import java.util.HashMap;
+import java.util.Map;
 
-public class FontLoader extends Manager {
+public class FontLoader implements Creatable, Disposable {
 
     static {
         FreeTypeFontGenerator.setMaxTextureSize(FreeTypeFontGenerator.NO_MAXIMUM);
@@ -20,12 +21,11 @@ public class FontLoader extends Manager {
     public static final String TAG = "FontLoader";
 
     private transient FreeTypeFontGenerator fontGenerator;
-    private transient HashMap<FontSize, BitmapFont> generatedFonts = new HashMap<>();
+    private transient Map<FontSize, BitmapFont> generatedFonts = new HashMap<>();
 
     @Getter private String fontName;
 
-    public FontLoader(Core core, String fontName) {
-        super(core);
+    public FontLoader(String fontName) {
         this.fontName = fontName;
     }
 
