@@ -2,6 +2,7 @@ package com.atlne.freeskill.graphics.scenes.loading;
 
 import com.atlne.freeskill.Core;
 import com.atlne.freeskill.graphics.scenes.Scene;
+import com.atlne.freeskill.graphics.scenes.menu.MenuScene;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
@@ -26,6 +27,7 @@ public class LoadingScene extends Scene {
     @Override
     public void create() {
         super.create();
+
         splash = new Image(new Texture(Gdx.files.local(SPLASH_TEXTURE_PATH)));
         splash.setColor(splashColour);
         addActor(splash);
@@ -36,7 +38,7 @@ public class LoadingScene extends Scene {
         splashColour = loaded
                 ? splashColour.lerp(Color.BLACK, Gdx.graphics.getDeltaTime() / SPLASH_DURATION)
                 : splashColour.lerp(Color.WHITE, Gdx.graphics.getDeltaTime() / SPLASH_DURATION);
-        splash.setPosition(getWidth() / 2, getHeight() / 2, Align.center);
+        splash.setPosition(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2, Align.center);
         splash.setColor(splashColour);
 
         super.draw();
@@ -44,10 +46,13 @@ public class LoadingScene extends Scene {
 
     @Override
     public void act() {
-        if(!loaded && splashColour.a > 1f - SPLASH_ALPHA_THRESHOLD) {
+        if(!loaded && splashColour.r > 1f - SPLASH_ALPHA_THRESHOLD) {
             core.runCreatables();
             core.getAudioPlayer().playSoundEffect(SPLASH_SOUND_EFFECT_NAME);
             loaded = true;
+        } else if(loaded && splashColour.r < SPLASH_ALPHA_THRESHOLD) {
+            core.getGraphicsManager().getSceneManager().popScene(this);
+            core.getGraphicsManager().getSceneManager().pushScene(new MenuScene(core));
         }
 
         super.act();

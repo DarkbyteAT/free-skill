@@ -16,9 +16,15 @@ public class SceneManager {
     public void update() {
         pushQueue.forEach(Scene::create);
         sceneStack.addAll(pushQueue);
+        pushQueue.clear();
         popQueue.forEach(Scene::dispose);
         sceneStack.removeAll(popQueue);
+        popQueue.clear();
         displayScenes();
+    }
+
+    public void resize(int width, int height) {
+        sceneStack.forEach(scene -> scene.resize(width, height));
     }
 
     public Scene getScene() {

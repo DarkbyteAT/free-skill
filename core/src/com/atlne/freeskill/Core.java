@@ -42,6 +42,11 @@ public final class Core extends ApplicationAdapter {
 		graphicsManager.update();
 	}
 
+	@Override
+	public void resize(int width, int height) {
+		graphicsManager.resize(width, height);
+	}
+
 	public void registerCreatable(Creatable creatable) {
 		creatables.add(creatable);
 	}

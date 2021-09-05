@@ -18,10 +18,15 @@ public class Scene extends Stage implements Creatable {
     @Override
     public void create() {
         setViewport(new ScreenViewport(new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight())));
+        getViewport().update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
     }
 
     public void display() {
         act();
         draw();
+    }
+
+    public void resize(int width, int height) {
+        getViewport().update(width, height, true);
     }
 }

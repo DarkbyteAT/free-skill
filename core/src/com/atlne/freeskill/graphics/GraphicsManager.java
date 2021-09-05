@@ -49,6 +49,10 @@ public class GraphicsManager extends Manager {
         sceneManager.update();
     }
 
+    public void resize(int width, int height) {
+        sceneManager.resize(width, height);
+    }
+
     public void takeScreenshot() {
         PixmapIO.writePNG(Gdx.files.local(String.format("%s/%s.png", SCREENSHOTS_PATH, LocalDateTime.now())),
                 getScreenTexture().getTexture().getTextureData().consumePixmap());
