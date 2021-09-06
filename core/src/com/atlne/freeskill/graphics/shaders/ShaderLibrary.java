@@ -23,6 +23,8 @@ public class ShaderLibrary extends Manager {
 
     @Override
     public void create() {
+        ShaderProgram.pedantic = false;
+
         var shaderLibraryFolder = Gdx.files.local(SHADER_LIBRARY_PATH);
         Arrays.stream(shaderLibraryFolder.list())
                 .filter(FileHandle::isDirectory)
@@ -34,6 +36,10 @@ public class ShaderLibrary extends Manager {
         Gdx.app.log(TAG, "Disposing all compiled shaders...");
         shaderMap.values().forEach(ShaderProgram::dispose);
         shaderMap.clear();
+    }
+
+    public ShaderProgram getShader(String shaderName) {
+        return shaderMap.get(shaderName);
     }
 
     private void compileShader(FileHandle shaderFolder) {

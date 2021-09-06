@@ -36,6 +36,7 @@ public class FontLoader implements Creatable, Disposable {
 
         for(var fontSize : FontSize.values()) {
             generatedFonts.put(fontSize, fontGenerator.generateFont(generateParameters(fontSize)));
+            generatedFonts.get(fontSize).getData().markupEnabled = true;
         }
     }
 
