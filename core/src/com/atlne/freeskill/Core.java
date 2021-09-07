@@ -21,11 +21,13 @@ public final class Core extends ApplicationAdapter {
 	private final transient List<Creatable> creatables = new ArrayList<>();
 	private final transient List<Disposable> disposables = new ArrayList<>();
 
+	// CORE LOAD
 	@Getter private transient JsonHelper jsonHelper;
 	@Getter private transient AudioPlayer audioPlayer;
 	@Getter private transient GraphicsManager graphicsManager;
 	@Getter private transient InputManager inputManager;
 
+	// LOADING SCREEN LOAD
 	@Getter private transient FontManager fontManager;
 	@Getter private transient ShaderLibrary shaderLibrary;
 

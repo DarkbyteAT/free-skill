@@ -4,7 +4,6 @@ import com.atlne.freeskill.Core;
 import com.atlne.freeskill.graphics.scenes.Scene;
 import com.atlne.freeskill.graphics.scenes.menu.MenuScene;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.Align;
@@ -13,11 +12,10 @@ public class LoadingScene extends Scene {
 
     public static final String SPLASH_TEXTURE_PATH = "assets/textures/scenes/loading/splash.jpg";
     public static final String SPLASH_SOUND_EFFECT_NAME = "scenes/loading/splash";
-    public static final float SPLASH_ALPHA_THRESHOLD = 0.05f;
-    public static final float SPLASH_DURATION = 0.5f;
+    public static final float FADE_IN_DURATION = 0.5f;
+    public static final float FADE_OUT_DURATION = 1.5f;
 
     private transient Image splash;
-    private transient Color splashColour = Color.CLEAR;
     private transient boolean loaded = false;
 
     public LoadingScene(Core core) {
@@ -28,33 +26,41 @@ public class LoadingScene extends Scene {
     public void create() {
         super.create();
 
+        alpha = 0;
+
         splash = new Image(new Texture(Gdx.files.local(SPLASH_TEXTURE_PATH)));
-        splash.setColor(splashColour);
+        splash.setPosition(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2, Align.center);
         addActor(splash);
     }
 
     @Override
     public void draw() {
-        splashColour = loaded
-                ? splashColour.lerp(Color.BLACK, Gdx.graphics.getDeltaTime() / SPLASH_DURATION)
-                : splashColour.lerp(Color.WHITE, Gdx.graphics.getDeltaTime() / SPLASH_DURATION);
-        splash.setPosition(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2, Align.center);
-        splash.setColor(splashColour);
+        if(loaded) {
+            alpha -= Gdx.graphics.getDeltaTime() / FADE_OUT_DURATION;
+        } else {
+            alpha += Gdx.graphics.getDeltaTime() / FADE_IN_DURATION;
+        }
 
         super.draw();
     }
 
     @Override
     public void act() {
-        if(!loaded && splashColour.r > 1f - SPLASH_ALPHA_THRESHOLD) {
+        if(!loaded && alpha >= 1f) {
             core.runCreatables();
             core.getAudioPlayer().playSoundEffect(SPLASH_SOUND_EFFECT_NAME);
             loaded = true;
-        } else if(loaded && splashColour.r < SPLASH_ALPHA_THRESHOLD) {
+        } else if(loaded && alpha <= 0) {
             core.getGraphicsManager().getSceneController().popScene(this);
             core.getGraphicsManager().getSceneController().pushScene(new MenuScene(core));
         }
 
         super.act();
+    }
+
+    @Override
+    public void resize(int width, int height) {
+        super.resize(width, height);
+        splash.setPosition(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2, Align.center);
     }
 }

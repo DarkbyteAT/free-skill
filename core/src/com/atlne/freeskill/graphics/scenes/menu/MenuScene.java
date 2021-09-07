@@ -30,11 +30,10 @@ public class MenuScene extends Scene {
 
         generateBackgroundTexture();
         titleLabel = new Label(core, "FreeSkill", "pixel", FontSize.HUGER);
-        startButton = new TextButton(core, "Start", "standard", FontSize.LARGER);
-        settingsButton = new TextButton(core, "Settings", "standard", FontSize.LARGER);
-        exitButton = new TextButton(core, "Exit", "standard", FontSize.LARGER);
+        startButton = new TextButton(core, "Start", "pixel", FontSize.LARGER);
+        settingsButton = new TextButton(core, "Settings", "pixel", FontSize.LARGER);
+        exitButton = new TextButton(core, "Exit", "pixel", FontSize.LARGER);
 
-        //this.setDebugAll(true);
         positionActors();
         addButtonBehaviours();
 
@@ -56,7 +55,7 @@ public class MenuScene extends Scene {
         verticalGradientShader.bind();
         verticalGradientShader.setUniformf("u_startColour", Color.ORANGE.r, Color.ORANGE.g, Color.ORANGE.b, Color.ORANGE.a);
         verticalGradientShader.setUniformf("u_endColour", Color.PURPLE.r, Color.PURPLE.g, Color.PURPLE.b, Color.PURPLE.a);
-        verticalGradientShader.setUniformf("u_intensity", 1);
+        verticalGradientShader.setUniformf("u_intensity", 0.8f);
 
         getBatch().setShader(verticalGradientShader);
         getBatch().begin();
@@ -75,7 +74,7 @@ public class MenuScene extends Scene {
 
     private void generateBackgroundTexture() {
         Pixmap pixmap = new Pixmap(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), Pixmap.Format.RGBA8888);
-        pixmap.setColor(Color.WHITE);
+        pixmap.setColor(Color.BLACK);
         pixmap.fillRectangle(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         background = new Texture(pixmap);
     }
