@@ -12,6 +12,8 @@ public final class DesktopLauncher {
 		config.title = "FreeSkill";
 		config.width = 1440;
 		config.height = 900;
+		config.allowSoftwareMode = true;
+		config.vSyncEnabled = false;
 		config.backgroundFPS = 0;
 		config.foregroundFPS = 0;
 		config.samples = 3;

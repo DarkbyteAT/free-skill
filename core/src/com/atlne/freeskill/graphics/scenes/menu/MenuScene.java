@@ -73,17 +73,17 @@ public class MenuScene extends Scene {
     }
 
     private void generateBackgroundTexture() {
-        Pixmap pixmap = new Pixmap(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), Pixmap.Format.RGBA8888);
+        Pixmap pixmap = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
         pixmap.setColor(Color.BLACK);
-        pixmap.fillRectangle(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        pixmap.fillRectangle(0, 0, 1, 1);
         background = new Texture(pixmap);
     }
 
     private void positionActors() {
         titleLabel.setPosition(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() - (titleLabel.getHeight() * 1.25f), Align.center);
-        startButton.setPosition(Gdx.graphics.getWidth() / 2, titleLabel.getY() - (startButton.getHeight() * 4), Align.center);
-        settingsButton.setPosition(Gdx.graphics.getWidth() / 2, startButton.getY() - (settingsButton.getHeight() * 4), Align.center);
-        exitButton.setPosition(Gdx.graphics.getWidth() / 2, settingsButton.getY() - (exitButton.getHeight() * 4), Align.center);
+        startButton.setPosition(Gdx.graphics.getWidth() / 2, titleLabel.getY() - (startButton.getHeight() * 3), Align.center);
+        settingsButton.setPosition(Gdx.graphics.getWidth() / 2, startButton.getY() - (settingsButton.getHeight() * 3), Align.center);
+        exitButton.setPosition(Gdx.graphics.getWidth() / 2, settingsButton.getY() - (exitButton.getHeight() * 3), Align.center);
     }
 
     private void addButtonBehaviours() {
