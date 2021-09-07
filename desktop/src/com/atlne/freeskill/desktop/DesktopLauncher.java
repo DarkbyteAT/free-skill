@@ -14,6 +14,7 @@ public final class DesktopLauncher {
 		config.height = 900;
 		config.backgroundFPS = 0;
 		config.foregroundFPS = 0;
+		config.samples = 3;
 		new LwjglApplication(new Core(), config);
 		SceneController sceneManager = new SceneController();
 	}

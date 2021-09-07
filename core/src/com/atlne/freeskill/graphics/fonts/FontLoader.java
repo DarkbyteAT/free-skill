@@ -57,8 +57,8 @@ public class FontLoader implements Creatable, Disposable {
         fontParameters.characters = FreeTypeFontGenerator.DEFAULT_CHARS;
         fontParameters.color = Color.WHITE;
         fontParameters.borderColor = Color.BLACK;
-        fontParameters.minFilter = Texture.TextureFilter.Nearest;
-        fontParameters.magFilter = Texture.TextureFilter.Nearest;
+        fontParameters.minFilter = Texture.TextureFilter.Linear;
+        fontParameters.magFilter = Texture.TextureFilter.Linear;
         fontParameters.genMipMaps = true;
         fontParameters.kerning = true;
         return fontParameters;

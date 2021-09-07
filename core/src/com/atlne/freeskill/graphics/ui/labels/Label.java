@@ -1,4 +1,4 @@
-package com.atlne.freeskill.graphics.ui;
+package com.atlne.freeskill.graphics.ui.labels;
 
 import com.atlne.freeskill.Core;
 import com.atlne.freeskill.graphics.fonts.FontSize;
@@ -7,6 +7,8 @@ import com.kotcrab.vis.ui.widget.VisLabel;
 
 public class Label extends VisLabel {
 
+    protected transient Core core;
+
     public Label(Core core, String text, String fontName, FontSize fontSize) {
         super(text, new com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle(
                 core.getFontManager().getFont(fontName, fontSize),
@@ -14,6 +16,7 @@ public class Label extends VisLabel {
             )
         );
 
+        this.core = core;
         updateBounds();
     }
 

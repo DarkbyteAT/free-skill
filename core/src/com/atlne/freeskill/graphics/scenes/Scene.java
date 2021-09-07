@@ -5,6 +5,7 @@ import com.atlne.freeskill.utils.Creatable;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
@@ -50,6 +51,7 @@ public class Scene extends Stage implements Creatable {
 
         TextureRegion frameTexture = new TextureRegion(frameBuffer.getColorBufferTexture());
         frameTexture.flip(false, true);
+        frameTexture.getTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
 
         bufferBatch.begin();
         bufferBatch.setColor(1, 1, 1, alpha);

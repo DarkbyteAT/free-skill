@@ -6,6 +6,7 @@ import com.atlne.freeskill.graphics.scenes.loading.LoadingScene;
 import com.atlne.freeskill.utils.Manager;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.PixmapIO;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Align;
@@ -46,7 +47,9 @@ public class GraphicsManager extends Manager {
     }
 
     public void update() {
-        ScreenUtils.clear(SCREEN_CLEAR_COLOUR);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT
+                | GL20.GL_DEPTH_BUFFER_BIT
+                | (Gdx.graphics.getBufferFormat().coverageSampling ? GL20.GL_COVERAGE_BUFFER_BIT_NV : 0));
         sceneController.update();
     }
 

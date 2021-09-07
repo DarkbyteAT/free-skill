@@ -3,13 +3,13 @@ package com.atlne.freeskill.graphics.scenes.menu;
 import com.atlne.freeskill.Core;
 import com.atlne.freeskill.graphics.fonts.FontSize;
 import com.atlne.freeskill.graphics.scenes.Scene;
-import com.atlne.freeskill.graphics.ui.Label;
 import com.atlne.freeskill.graphics.ui.buttons.TextButton;
+import com.atlne.freeskill.graphics.ui.labels.Label;
+import com.atlne.freeskill.graphics.ui.labels.WaveLabel;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.utils.Align;
 
 public class MenuScene extends Scene {
@@ -29,7 +29,7 @@ public class MenuScene extends Scene {
         super.create();
 
         generateBackgroundTexture();
-        titleLabel = new Label(core, "FreeSkill", "pixel", FontSize.HUGER);
+        titleLabel = new WaveLabel(core, "FreeSkill", "pixel", FontSize.HUGER, 0.025f, 1f);
         startButton = new TextButton(core, "Start", "pixel", FontSize.LARGER);
         settingsButton = new TextButton(core, "Settings", "pixel", FontSize.LARGER);
         exitButton = new TextButton(core, "Exit", "pixel", FontSize.LARGER);
@@ -51,7 +51,7 @@ public class MenuScene extends Scene {
 
     @Override
     public void draw() {
-        ShaderProgram verticalGradientShader = core.getShaderLibrary().getShader("vertical_gradient");
+        var verticalGradientShader = core.getShaderLibrary().getShader("vertical_gradient");
         verticalGradientShader.bind();
         verticalGradientShader.setUniformf("u_startColour", Color.ORANGE.r, Color.ORANGE.g, Color.ORANGE.b, Color.ORANGE.a);
         verticalGradientShader.setUniformf("u_endColour", Color.PURPLE.r, Color.PURPLE.g, Color.PURPLE.b, Color.PURPLE.a);

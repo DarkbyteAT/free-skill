@@ -9,12 +9,15 @@ import com.kotcrab.vis.ui.widget.VisTextButton;
 
 public class TextButton extends VisTextButton {
 
+    protected transient Core core;
+
     public TextButton(Core core, String text, String fontName, FontSize fontSize) {
         super(text, new VisTextButtonStyle(null, null, null,
                 core.getFontManager().getFont(fontName, fontSize)
             )
         );
 
+        this.core = core;
         updateBounds();
     }
 
