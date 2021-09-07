@@ -2,12 +2,14 @@ package com.atlne.freeskill.graphics.ui.buttons;
 
 import com.atlne.freeskill.Core;
 import com.atlne.freeskill.graphics.fonts.FontSize;
+import com.atlne.freeskill.graphics.ui.Resizable;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.kotcrab.vis.ui.widget.VisTextButton;
 
-public class TextButton extends VisTextButton {
+public class TextButton extends VisTextButton implements Resizable {
 
     protected transient Core core;
 
@@ -18,13 +20,13 @@ public class TextButton extends VisTextButton {
         );
 
         this.core = core;
-        updateBounds();
+        resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     }
 
     @Override
     public void setText(String text) {
         super.setText(text);
-        updateBounds();
+        resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     }
 
     public void setClickAction(Runnable action) {
@@ -37,7 +39,8 @@ public class TextButton extends VisTextButton {
         });
     }
 
-    private void updateBounds() {
+    @Override
+    public void resize(int width, int height) {
         var layout = new GlyphLayout();
         layout.setText(getStyle().font, getText());
         setWidth(layout.width);

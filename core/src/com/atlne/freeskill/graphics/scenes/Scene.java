@@ -1,6 +1,7 @@
 package com.atlne.freeskill.graphics.scenes;
 
 import com.atlne.freeskill.Core;
+import com.atlne.freeskill.graphics.ui.Resizable;
 import com.atlne.freeskill.utils.Creatable;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -17,7 +18,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 @RequiredArgsConstructor
-public class Scene extends Stage implements Creatable {
+public class Scene extends Stage implements Creatable, Resizable {
 
     @NonNull protected transient Core core;
 
@@ -61,7 +62,7 @@ public class Scene extends Stage implements Creatable {
 
         time += Gdx.graphics.getDeltaTime();
     }
-
+    @Override
     public void resize(int width, int height) {
         getViewport().update(width, height, true);
     }

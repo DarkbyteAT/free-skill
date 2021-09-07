@@ -4,8 +4,10 @@ import com.atlne.freeskill.Core;
 import com.atlne.freeskill.graphics.fonts.FontSize;
 import com.atlne.freeskill.graphics.scenes.Scene;
 import com.atlne.freeskill.graphics.shaders.Shader;
+import com.atlne.freeskill.graphics.ui.Resizable;
 import com.atlne.freeskill.graphics.ui.buttons.TextButton;
-import com.atlne.freeskill.graphics.ui.labels.ShaderLabel;
+import com.atlne.freeskill.graphics.ui.labels.Label;
+import com.atlne.freeskill.graphics.ui.shaders.ShaderContainer;
 import com.atlne.freeskill.utils.collections.MapUtils;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -14,10 +16,12 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.Align;
 import com.github.czyzby.kiwi.util.tuple.immutable.Pair;
 
+import java.util.Arrays;
+
 public class MenuScene extends Scene {
 
     private transient Texture background;
-    private transient ShaderLabel titleLabel;
+    private transient ShaderContainer<Label> titleLabel;
     private transient TextButton startButton;
     private transient TextButton settingsButton;
     private transient TextButton exitButton;
@@ -34,10 +38,12 @@ public class MenuScene extends Scene {
 
         generateBackgroundTexture();
 
-        titleLabel = new ShaderLabel(core, "FreeSkill", "pixel", FontSize.HUGER, "vertical_wave",
+        titleLabel = new ShaderContainer<Label>(core,
+                new Label(core, "FreeSkill", "pixel", FontSize.HUGER),
+                "vertical_wave",
                 MapUtils.pairsToMap(
-                        Pair.of("u_intensity", 0.05f),
-                        Pair.of("u_frequency", 0.5f)
+                        Pair.of("u_intensity", 0.04f),
+                        Pair.of("u_frequency", 0.25f)
                 )
         );
 
@@ -88,10 +94,34 @@ public class MenuScene extends Scene {
     }
 
     private void positionActors() {
-        titleLabel.setPosition(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() - (titleLabel.getHeight() * 1.25f), Align.center);
-        startButton.setPosition(Gdx.graphics.getWidth() / 2, titleLabel.getY() - (startButton.getHeight() * 3), Align.center);
-        settingsButton.setPosition(Gdx.graphics.getWidth() / 2, startButton.getY() - (settingsButton.getHeight() * 3), Align.center);
-        exitButton.setPosition(Gdx.graphics.getWidth() / 2, settingsButton.getY() - (exitButton.getHeight() * 3), Align.center);
+        titleLabel.setPosition(
+                Gdx.graphics.getWidth() / 2,
+                Gdx.graphics.getHeight() - (titleLabel.getActor().getHeight() * 1.25f),
+                Align.center
+        );
+
+        startButton.setPosition(
+                Gdx.graphics.getWidth() / 2,
+                titleLabel.getY() - (titleLabel.getActor().getHeight() * 2),
+                Align.center
+        );
+
+        settingsButton.setPosition(
+                Gdx.graphics.getWidth() / 2,
+                startButton.getY() - (startButton.getHeight() * 3),
+                Align.center
+        );
+
+        exitButton.setPosition(
+                Gdx.graphics.getWidth() / 2,
+                settingsButton.getY() - (settingsButton.getHeight() * 3),
+                Align.center
+        );
+
+        Arrays.stream(getActors().toArray())
+                .filter(Resizable.class::isInstance)
+                .map(Resizable.class::cast)
+                .forEach(resizable -> resizable.resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
     }
 
     private void addButtonBehaviours() {
@@ -99,7 +129,7 @@ public class MenuScene extends Scene {
     }
 
     private void updateShaders() {
-        titleLabel.getParameters().put("u_time", time);
+        titleLabel.getShaderParameters().put("u_time", time);
         verticalGradientShader.bind(core, MapUtils.pairsToMap(
                 Pair.of("u_startColour", Color.ORANGE),
                 Pair.of("u_endColour", Color.PURPLE),
