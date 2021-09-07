@@ -3,22 +3,26 @@ package com.atlne.freeskill.graphics.scenes.menu;
 import com.atlne.freeskill.Core;
 import com.atlne.freeskill.graphics.fonts.FontSize;
 import com.atlne.freeskill.graphics.scenes.Scene;
+import com.atlne.freeskill.graphics.shaders.Shader;
 import com.atlne.freeskill.graphics.ui.buttons.TextButton;
-import com.atlne.freeskill.graphics.ui.labels.Label;
-import com.atlne.freeskill.graphics.ui.labels.WaveLabel;
+import com.atlne.freeskill.graphics.ui.labels.ShaderLabel;
+import com.atlne.freeskill.utils.collections.MapUtils;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.Align;
+import com.github.czyzby.kiwi.util.tuple.immutable.Pair;
 
 public class MenuScene extends Scene {
 
     private transient Texture background;
-    private transient Label titleLabel;
+    private transient ShaderLabel titleLabel;
     private transient TextButton startButton;
     private transient TextButton settingsButton;
     private transient TextButton exitButton;
+
+    private transient Shader verticalGradientShader;
 
     public MenuScene(Core core) {
         super(core, false);
@@ -29,10 +33,19 @@ public class MenuScene extends Scene {
         super.create();
 
         generateBackgroundTexture();
-        titleLabel = new WaveLabel(core, "FreeSkill", "pixel", FontSize.HUGER, 0.025f, 1f);
+
+        titleLabel = new ShaderLabel(core, "FreeSkill", "pixel", FontSize.HUGER, "vertical_wave",
+                MapUtils.pairsToMap(
+                        Pair.of("u_intensity", 0.05f),
+                        Pair.of("u_frequency", 0.5f)
+                )
+        );
+
         startButton = new TextButton(core, "Start", "pixel", FontSize.LARGER);
         settingsButton = new TextButton(core, "Settings", "pixel", FontSize.LARGER);
         exitButton = new TextButton(core, "Exit", "pixel", FontSize.LARGER);
+
+        verticalGradientShader = core.getShaderLibrary().getShader("vertical_gradient");
 
         positionActors();
         addButtonBehaviours();
@@ -51,13 +64,8 @@ public class MenuScene extends Scene {
 
     @Override
     public void draw() {
-        var verticalGradientShader = core.getShaderLibrary().getShader("vertical_gradient");
-        verticalGradientShader.bind();
-        verticalGradientShader.setUniformf("u_startColour", Color.ORANGE.r, Color.ORANGE.g, Color.ORANGE.b, Color.ORANGE.a);
-        verticalGradientShader.setUniformf("u_endColour", Color.PURPLE.r, Color.PURPLE.g, Color.PURPLE.b, Color.PURPLE.a);
-        verticalGradientShader.setUniformf("u_intensity", 0.8f);
-
-        getBatch().setShader(verticalGradientShader);
+        updateShaders();
+        getBatch().setShader(verticalGradientShader.getShaderProgram());
         getBatch().begin();
         getBatch().draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         getBatch().end();
@@ -88,5 +96,14 @@ public class MenuScene extends Scene {
 
     private void addButtonBehaviours() {
         exitButton.setClickAction(Gdx.app::exit);
+    }
+
+    private void updateShaders() {
+        titleLabel.getParameters().put("u_time", time);
+        verticalGradientShader.bind(core, MapUtils.pairsToMap(
+                Pair.of("u_startColour", Color.ORANGE),
+                Pair.of("u_endColour", Color.PURPLE),
+                Pair.of("u_intensity", 0.875f)
+        ));
     }
 }

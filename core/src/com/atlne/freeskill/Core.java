@@ -11,7 +11,6 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Disposable;
 import lombok.Getter;
-import lombok.SneakyThrows;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +30,6 @@ public final class Core extends ApplicationAdapter {
 	@Getter private transient FontManager fontManager;
 	@Getter private transient ShaderLibrary shaderLibrary;
 
-	@SneakyThrows
 	@Override
 	public void create() {
 		loadCoreObjects();

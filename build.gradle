@@ -33,7 +33,7 @@ allprojects {
         spockVersion = 'spock-2.0'
         jUnitVersion = '5.7.2'
         guavaVersion = '30.1.1-jre'
-        daggerVersion = '2.38.1'
+        janinoVersion = '3.1.6'
     }
 
     repositories {
@@ -98,6 +98,7 @@ project(":core") {
         implementation "javax.annotation:javax.annotation-api:$javaxAnnotationVersion"
         implementation "com.google.code.gson:gson:$gsonVersion"
         implementation "com.google.guava:guava:$guavaVersion"
+        compile "org.codehaus.janino:janino:$janinoVersion"
         providedCompile "org.projectlombok:lombok:$lombokVersion"
 
         annotationProcessor "org.projectlombok:lombok:$lombokVersion"

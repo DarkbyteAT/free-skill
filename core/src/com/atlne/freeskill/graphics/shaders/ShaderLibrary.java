@@ -15,7 +15,7 @@ public class ShaderLibrary extends Manager {
     public static final String TAG = "ShaderLibrary";
     public static final String SHADER_LIBRARY_PATH = "assets/shaders/";
 
-    private transient Map<String, ShaderProgram> shaderMap = new HashMap<>();
+    private transient Map<String, Shader> shaderMap = new HashMap<>();
 
     public ShaderLibrary(Core core) {
         super(core);
@@ -34,26 +34,31 @@ public class ShaderLibrary extends Manager {
     @Override
     public void dispose() {
         Gdx.app.log(TAG, "Disposing all compiled shaders...");
-        shaderMap.values().forEach(ShaderProgram::dispose);
+        shaderMap.values().forEach(Shader::dispose);
         shaderMap.clear();
     }
 
-    public ShaderProgram getShader(String shaderName) {
+    public Shader getShader(String shaderName) {
         return shaderMap.get(shaderName);
     }
 
     private void compileShader(FileHandle shaderFolder) {
         var shaderName = shaderFolder.name();
-        var vertexShader = shaderFolder.child(String.format("%s.vert", shaderName));
-        var fragmentShader = shaderFolder.child(String.format("%s.frag", shaderName));
+        var vertexShaderFile = shaderFolder.child(String.format("vertex.glsl", shaderName));
+        var fragmentShaderFile = shaderFolder.child(String.format("fragment.glsl", shaderName));
+        var shaderScriptFile = shaderFolder.child(String.format("script.java"));
         Gdx.app.log(TAG, String.format("Found shader '%s'!", shaderName));
 
-        if(vertexShader.exists() && fragmentShader.exists()) {
-            shaderMap.put(shaderName, new ShaderProgram(vertexShader, fragmentShader));
-            if(!shaderMap.get(shaderName).isCompiled()) {
+        if(vertexShaderFile.exists() && fragmentShaderFile.exists()) {
+            var shaderProgram = new ShaderProgram(vertexShaderFile, fragmentShaderFile);
+            var shaderScript = new ShaderScript(shaderScriptFile);
+            shaderScript.create();
+            shaderMap.put(shaderName, new Shader(shaderProgram, shaderScript));
+
+            if(!shaderProgram.isCompiled()) {
                 throw new RuntimeException(String.format("Shader '%s' did not compile correctly! See below for log:\n%s",
                         shaderName,
-                        shaderMap.get(shaderName).getLog()));
+                        shaderProgram.getLog()));
             }
         } else {
             throw new RuntimeException(String.format("Vertex or fragment shader missing for '%s'!", shaderName));

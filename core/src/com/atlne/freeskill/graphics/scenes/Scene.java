@@ -24,6 +24,7 @@ public class Scene extends Stage implements Creatable {
     private transient FrameBuffer frameBuffer;
     private transient SpriteBatch bufferBatch;
     @Getter @Setter protected float alpha = 1;
+    @Getter protected float time;
 
     @Getter private transient final boolean displayPrevious;
 
@@ -57,6 +58,8 @@ public class Scene extends Stage implements Creatable {
         bufferBatch.setColor(1, 1, 1, alpha);
         bufferBatch.draw(frameTexture, 0, 0);
         bufferBatch.end();
+
+        time += Gdx.graphics.getDeltaTime();
     }
 
     public void resize(int width, int height) {
