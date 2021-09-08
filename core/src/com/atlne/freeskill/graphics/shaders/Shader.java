@@ -8,8 +8,7 @@ import lombok.Data;
 
 import java.util.Map;
 
-@Data
-@AllArgsConstructor
+@Data @AllArgsConstructor
 public class Shader implements Disposable {
 
     private transient ShaderProgram shaderProgram;

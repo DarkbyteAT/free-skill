@@ -3,8 +3,7 @@ package com.atlne.freeskill.graphics.fonts;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-@Getter
-@AllArgsConstructor
+@Getter @AllArgsConstructor
 public enum FontSize {
     TINY(4, 1),
     SMALLER(12, 1),

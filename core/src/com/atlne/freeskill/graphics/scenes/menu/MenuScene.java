@@ -3,25 +3,25 @@ package com.atlne.freeskill.graphics.scenes.menu;
 import com.atlne.freeskill.Core;
 import com.atlne.freeskill.graphics.fonts.FontSize;
 import com.atlne.freeskill.graphics.scenes.Scene;
+import com.atlne.freeskill.graphics.scenes.ui.Alignment;
+import com.atlne.freeskill.graphics.scenes.ui.buttons.TextButton;
+import com.atlne.freeskill.graphics.scenes.ui.containers.ShaderContainer;
+import com.atlne.freeskill.graphics.scenes.ui.labels.Label;
 import com.atlne.freeskill.graphics.shaders.Shader;
-import com.atlne.freeskill.graphics.ui.Resizable;
-import com.atlne.freeskill.graphics.ui.buttons.TextButton;
-import com.atlne.freeskill.graphics.ui.labels.Label;
-import com.atlne.freeskill.graphics.ui.shaders.ShaderContainer;
 import com.atlne.freeskill.utils.collections.MapUtils;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.math.Vector2;
 import com.github.czyzby.kiwi.util.tuple.immutable.Pair;
-
-import java.util.Arrays;
 
 public class MenuScene extends Scene {
 
     private transient Texture background;
-    private transient ShaderContainer<Label> titleLabel;
+    private transient Label titleLabel;
+    private transient ShaderContainer<Label> titleLabelContainer;
     private transient TextButton startButton;
     private transient TextButton settingsButton;
     private transient TextButton exitButton;
@@ -38,9 +38,8 @@ public class MenuScene extends Scene {
 
         generateBackgroundTexture();
 
-        titleLabel = new ShaderContainer<Label>(core,
-                new Label(core, "FreeSkill", "pixel", FontSize.HUGER),
-                "vertical_wave",
+        titleLabel = new Label(core, "FreeSkill", "pixel", FontSize.HUGER);
+        titleLabelContainer = new ShaderContainer<>(core, titleLabel, "vertical_wave",
                 MapUtils.pairsToMap(
                         Pair.of("u_intensity", 0.04f),
                         Pair.of("u_frequency", 0.25f)
@@ -53,13 +52,13 @@ public class MenuScene extends Scene {
 
         verticalGradientShader = core.getShaderLibrary().getShader("vertical_gradient");
 
-        positionActors();
+        positionElements();
         addButtonBehaviours();
-
-        addActor(titleLabel);
-        addActor(startButton);
-        addActor(settingsButton);
-        addActor(exitButton);
+        
+        addSceneElement(titleLabelContainer);
+        addSceneElement(startButton);
+        addSceneElement(settingsButton);
+        addSceneElement(exitButton);
     }
 
     @Override
@@ -69,21 +68,22 @@ public class MenuScene extends Scene {
     }
 
     @Override
-    public void draw() {
+    public void draw(Batch batch) {
         updateShaders();
-        getBatch().setShader(verticalGradientShader.getShaderProgram());
-        getBatch().begin();
-        getBatch().draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        getBatch().end();
-        getBatch().setShader(null);
 
-        super.draw();
+        batch.setShader(verticalGradientShader.getShaderProgram());
+        batch.begin();
+        batch.draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        batch.end();
+        batch.setShader(null);
+
+        super.draw(batch);
     }
 
     @Override
     public void resize(int width, int height) {
         super.resize(width, height);
-        positionActors();
+        positionElements();
     }
 
     private void generateBackgroundTexture() {
@@ -93,35 +93,34 @@ public class MenuScene extends Scene {
         background = new Texture(pixmap);
     }
 
-    private void positionActors() {
-        titleLabel.setPosition(
+    private void positionElements() {
+        titleLabel.setPosition(new Vector2(
                 Gdx.graphics.getWidth() / 2,
-                Gdx.graphics.getHeight() - (titleLabel.getActor().getHeight() * 1.25f),
-                Align.center
-        );
+                Gdx.graphics.getHeight() - (titleLabel.getSize().y * 1.25f)
+        ));
 
-        startButton.setPosition(
+        titleLabel.setAlignment(Alignment.CENTER);
+
+        startButton.setPosition(new Vector2(
                 Gdx.graphics.getWidth() / 2,
-                titleLabel.getY() - (titleLabel.getActor().getHeight() * 2),
-                Align.center
-        );
+                titleLabel.getPosition().y - (titleLabel.getSize().y * 2)
+        ));
 
-        settingsButton.setPosition(
+        startButton.setAlignment(Alignment.CENTER);
+
+        settingsButton.setPosition(new Vector2(
                 Gdx.graphics.getWidth() / 2,
-                startButton.getY() - (startButton.getHeight() * 3),
-                Align.center
-        );
+                startButton.getPosition().y - (startButton.getSize().y * 3)
+        ));
 
-        exitButton.setPosition(
+        settingsButton.setAlignment(Alignment.CENTER);
+
+        exitButton.setPosition(new Vector2(
                 Gdx.graphics.getWidth() / 2,
-                settingsButton.getY() - (settingsButton.getHeight() * 3),
-                Align.center
-        );
+                settingsButton.getPosition().y - (settingsButton.getSize().y * 3)
+        ));
 
-        Arrays.stream(getActors().toArray())
-                .filter(Resizable.class::isInstance)
-                .map(Resizable.class::cast)
-                .forEach(resizable -> resizable.resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
+        exitButton.setAlignment(Alignment.CENTER);
     }
 
     private void addButtonBehaviours() {
@@ -129,7 +128,7 @@ public class MenuScene extends Scene {
     }
 
     private void updateShaders() {
-        titleLabel.getShaderParameters().put("u_time", time);
+        titleLabelContainer.getShaderParameters().put("u_time", time);
         verticalGradientShader.bind(core, MapUtils.pairsToMap(
                 Pair.of("u_startColour", Color.ORANGE),
                 Pair.of("u_endColour", Color.PURPLE),

@@ -23,7 +23,8 @@ public class FontLoader implements Creatable, Disposable {
     private transient FreeTypeFontGenerator fontGenerator;
     private transient Map<FontSize, BitmapFont> generatedFonts = new HashMap<>();
 
-    @Getter private String fontName;
+    @Getter
+    private String fontName;
 
     public FontLoader(String fontName) {
         this.fontName = fontName;
@@ -61,6 +62,8 @@ public class FontLoader implements Creatable, Disposable {
         fontParameters.magFilter = Texture.TextureFilter.Linear;
         fontParameters.genMipMaps = true;
         fontParameters.kerning = true;
+        fontParameters.gamma = 1;
+        fontParameters.borderGamma = 1;
         return fontParameters;
     }
 }

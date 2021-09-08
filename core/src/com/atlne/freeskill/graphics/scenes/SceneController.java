@@ -41,10 +41,6 @@ public class SceneController implements Disposable {
         sceneStack.forEach(scene -> scene.resize(width, height));
     }
 
-    public Scene getScene() {
-        return sceneStack.peek();
-    }
-
     public void pushScene(Scene scene) {
         pushQueue.push(scene);
     }
@@ -74,5 +70,9 @@ public class SceneController implements Disposable {
         });
 
         return scenesToDisplay;
+    }
+
+    public Scene getScene() {
+        return sceneStack.peek();
     }
 }

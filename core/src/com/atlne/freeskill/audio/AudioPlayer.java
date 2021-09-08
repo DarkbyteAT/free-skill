@@ -21,9 +21,12 @@ public class AudioPlayer extends Manager {
     private final transient HashMap<String, Music> music = new HashMap<>();
     private final transient HashMap<String, Sound> soundEffects = new HashMap<>();
 
-    @Getter private VolumeInformation volumeInformation;
-    @Getter private transient float fadeMultiplier = 1;
-    @Getter private transient String currentTrack = "";
+    @Getter
+    private VolumeInformation volumeInformation;
+    @Getter
+    private transient float fadeMultiplier = 1;
+    @Getter
+    private transient String currentTrack = "";
 
     public AudioPlayer(Core core) {
         super(core);

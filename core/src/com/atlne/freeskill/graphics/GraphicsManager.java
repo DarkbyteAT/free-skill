@@ -5,7 +5,6 @@ import com.atlne.freeskill.graphics.scenes.SceneController;
 import com.atlne.freeskill.graphics.scenes.loading.LoadingScene;
 import com.atlne.freeskill.utils.Manager;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.PixmapIO;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -20,7 +19,6 @@ public class GraphicsManager extends Manager {
 
     public static final String UI_SKIN_PATH = "/assets/ui/x2/tinted.json";
     public static final String SCREENSHOTS_PATH = "/screenshots";
-    public static final Color SCREEN_CLEAR_COLOUR = Color.BLACK;
     public static final int PIXELS_PER_METER = 32;
 
     @Getter private transient SceneController sceneController;

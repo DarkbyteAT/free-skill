@@ -31,7 +31,8 @@ public class InputManager extends Manager {
     private transient boolean[] doubleClicked = new boolean[16];
     private transient boolean[] doublePressed = new boolean[256];
 
-    @Setter private transient Scene inputScene;
+    @Setter
+    private transient Scene inputScene;
 
     public InputManager(Core core) {
         super(core);
