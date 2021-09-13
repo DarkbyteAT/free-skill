@@ -41,14 +41,6 @@ public class SceneController implements Disposable {
         sceneStack.forEach(scene -> scene.resize(width, height));
     }
 
-    public void pushScene(Scene scene) {
-        pushQueue.push(scene);
-    }
-
-    public void popScene(Scene scene) {
-        popQueue.push(scene);
-    }
-
     private void displayScenes() {
         var scenesToDisplay = collectScenesToDisplay();
 
@@ -56,6 +48,14 @@ public class SceneController implements Disposable {
             Gdx.input.setInputProcessor(scenesToDisplay.get(scenesToDisplay.size() - 1));
             scenesToDisplay.forEach(Scene::display);
         }
+    }
+
+    public void pushScene(Scene scene) {
+        pushQueue.push(scene);
+    }
+
+    public void popScene(Scene scene) {
+        popQueue.push(scene);
     }
 
     private List<Scene> collectScenesToDisplay() {

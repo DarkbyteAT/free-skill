@@ -8,9 +8,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.PixmapIO;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.ScreenUtils;
-import com.kotcrab.vis.ui.VisUI;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
@@ -21,7 +19,8 @@ public class GraphicsManager extends Manager {
     public static final String SCREENSHOTS_PATH = "/screenshots";
     public static final int PIXELS_PER_METER = 32;
 
-    @Getter private transient SceneController sceneController;
+    @Getter
+    private transient SceneController sceneController;
 
     public GraphicsManager(Core core) {
         super(core);
@@ -29,18 +28,12 @@ public class GraphicsManager extends Manager {
 
     @Override
     public void create() {
-        VisUI.load(Gdx.files.local(UI_SKIN_PATH));
-        VisUI.setDefaultTitleAlign(Align.center);
-        VisUI.getSkin().getFont("default-font").getData().markupEnabled = true;
-        VisUI.getSkin().getFont("small-font").getData().markupEnabled = true;
-
         sceneController = new SceneController();
         sceneController.pushScene(new LoadingScene(core));
     }
 
     @Override
     public void dispose() {
-        VisUI.dispose(true);
         sceneController.dispose();
     }
 

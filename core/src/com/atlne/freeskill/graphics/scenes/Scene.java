@@ -1,9 +1,9 @@
 package com.atlne.freeskill.graphics.scenes;
 
 import com.atlne.freeskill.Core;
-import com.atlne.freeskill.graphics.scenes.ui.Drawable;
-import com.atlne.freeskill.graphics.scenes.ui.SceneElement;
-import com.atlne.freeskill.graphics.scenes.ui.Updatable;
+import com.atlne.freeskill.graphics.ui.Drawable;
+import com.atlne.freeskill.graphics.ui.SceneElement;
+import com.atlne.freeskill.graphics.ui.Updatable;
 import com.atlne.freeskill.utils.Creatable;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
@@ -47,7 +47,7 @@ public abstract class Scene extends InputAdapter implements Creatable, Disposabl
     @Getter
     private transient final boolean displayPrevious;
     @Getter @Setter
-    private transient boolean debugEnabled = true;
+    private transient boolean debugEnabled;
 
     @Override
     public void create() {
@@ -85,6 +85,7 @@ public abstract class Scene extends InputAdapter implements Creatable, Disposabl
 
     @Override
     public void update(float delta) {
+        core.getInputManager().setInputScene(this);
         sceneElements.forEach(sceneElement -> sceneElement.update(delta));
     }
 
@@ -105,14 +106,14 @@ public abstract class Scene extends InputAdapter implements Creatable, Disposabl
         bufferBatch.end();
 
         if(debugEnabled) {
-            drawDebugBounds();
+            drawDebug(debugRenderer);
         }
 
         update(Gdx.graphics.getDeltaTime());
         time += Gdx.graphics.getDeltaTime();
     }
 
-    public void drawDebugBounds() {
+    public void drawDebug(ShapeRenderer debugRenderer) {
         debugRenderer.setProjectionMatrix(camera.combined);
         debugRenderer.begin(ShapeRenderer.ShapeType.Line);
         debugRenderer.setColor(Color.LIME);

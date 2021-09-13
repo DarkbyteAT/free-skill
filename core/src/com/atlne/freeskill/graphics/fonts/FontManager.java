@@ -10,7 +10,7 @@ import java.util.Map;
 
 public class FontManager extends Manager {
 
-    public static final String FONTS_FOLDER_PATH = "assets/fonts";
+    public static final String FONTS_FOLDER_PATH = "fonts";
     public static final String TAG = "FontManager";
 
     private transient Map<String, FontLoader> fontLoaders = new HashMap<>();

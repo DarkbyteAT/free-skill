@@ -3,11 +3,12 @@ package com.atlne.freeskill.graphics.scenes.menu;
 import com.atlne.freeskill.Core;
 import com.atlne.freeskill.graphics.fonts.FontSize;
 import com.atlne.freeskill.graphics.scenes.Scene;
-import com.atlne.freeskill.graphics.scenes.ui.Alignment;
-import com.atlne.freeskill.graphics.scenes.ui.buttons.TextButton;
-import com.atlne.freeskill.graphics.scenes.ui.containers.ShaderContainer;
-import com.atlne.freeskill.graphics.scenes.ui.labels.Label;
+import com.atlne.freeskill.graphics.scenes.settings.SettingsScene;
 import com.atlne.freeskill.graphics.shaders.Shader;
+import com.atlne.freeskill.graphics.ui.Alignment;
+import com.atlne.freeskill.graphics.ui.buttons.TextButton;
+import com.atlne.freeskill.graphics.ui.containers.ShaderContainer;
+import com.atlne.freeskill.graphics.ui.labels.Label;
 import com.atlne.freeskill.utils.collections.MapUtils;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -124,6 +125,8 @@ public class MenuScene extends Scene {
     }
 
     private void addButtonBehaviours() {
+        settingsButton.setClickAction(() -> core.getGraphicsManager().getSceneController().pushScene(new SettingsScene(core)));
+
         exitButton.setClickAction(Gdx.app::exit);
     }
 

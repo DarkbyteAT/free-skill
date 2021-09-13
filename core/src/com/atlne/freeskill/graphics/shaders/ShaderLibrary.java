@@ -13,7 +13,7 @@ import java.util.Map;
 public class ShaderLibrary extends Manager {
 
     public static final String TAG = "ShaderLibrary";
-    public static final String SHADER_LIBRARY_PATH = "assets/shaders/";
+    public static final String SHADER_LIBRARY_PATH = "shaders";
 
     private transient Map<String, Shader> shaderMap = new HashMap<>();
 

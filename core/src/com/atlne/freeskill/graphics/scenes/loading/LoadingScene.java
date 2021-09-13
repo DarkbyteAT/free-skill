@@ -3,15 +3,15 @@ package com.atlne.freeskill.graphics.scenes.loading;
 import com.atlne.freeskill.Core;
 import com.atlne.freeskill.graphics.scenes.Scene;
 import com.atlne.freeskill.graphics.scenes.menu.MenuScene;
-import com.atlne.freeskill.graphics.scenes.ui.Alignment;
-import com.atlne.freeskill.graphics.scenes.ui.sprites.Image;
+import com.atlne.freeskill.graphics.ui.Alignment;
+import com.atlne.freeskill.graphics.ui.sprites.Image;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 
 public class LoadingScene extends Scene {
 
-    public static final String SPLASH_TEXTURE_PATH = "assets/textures/scenes/loading/splash.jpg";
+    public static final String SPLASH_TEXTURE_PATH = "textures/scenes/loading/splash.jpg";
     public static final String SPLASH_SOUND_EFFECT_NAME = "scenes/loading/splash";
     public static final float FADE_IN_DURATION = 0.5f;
     public static final float FADE_OUT_DURATION = 1.5f;

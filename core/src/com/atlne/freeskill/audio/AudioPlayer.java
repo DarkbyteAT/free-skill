@@ -14,8 +14,8 @@ public class AudioPlayer extends Manager {
 
     public static final String TAG = "AudioPlayer";
     public static final String[] SUPPORTED_EXTENSIONS = {"mp3", "wav", "ogg"};
-    public static final String MUSIC_FOLDER_PATH = "assets/music";
-    public static final String SOUND_EFFECTS_FOLDER_PATH = "assets/sfx";
+    public static final String MUSIC_FOLDER_PATH = "music";
+    public static final String SOUND_EFFECTS_FOLDER_PATH = "sfx";
     public static final String VOLUME_FILE_PATH = "config/volume.json";
 
     private final transient HashMap<String, Music> music = new HashMap<>();
